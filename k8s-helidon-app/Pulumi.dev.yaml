@@ -1,0 +1,13 @@
+config:
+  k8s-helidon-app:data:
+    appName: k8s-helidon-app
+    namespace: dev
+    deployment:
+      replicas: 1
+      image: "ghcr.io/shukawam/k8s-helidon-app:latest"
+    ingress:
+      host: helidon.dev.shukawam.me
+      tls:
+        hosts:
+          - helidon.dev.shukawam.me
+        secretName: shukawam-tls-secret-dev

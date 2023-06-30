@@ -1,0 +1,18 @@
+config:
+  k8s-helidon-app:data:
+    appName: k8s-helidon-app-otel
+    namespace: dev
+    deployment:
+      replicas: 1
+      image: "ghcr.io/shukawam/k8s-helidon-app-otel:latest"
+      envs:
+        - name: OTEL_EXPORTER_OTLP_TRACES_HEADERS
+          value: "Authorization=Basic c2h1a2F3YW1AZ21haWwuY29tOlNQbHd6N2ttcHdjUzNsVm4="
+        - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+          value: https://openobserve.shukawam.me/api/default/traces
+    ingress:
+      host: helidon.otel.shukawam.me
+      tls:
+        hosts:
+          - helidon.otel.shukawam.me
+        secretName: shukawam-tls-secret

@@ -1,0 +1,3 @@
+name: k8s-helidon-app
+runtime: nodejs
+description: A Pulumi stack for K8s Helidon App.
