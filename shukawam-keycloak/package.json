@@ -1,0 +1,12 @@
+{
+    "name": "shukawam-keycloak",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^16"
+    },
+    "dependencies": {
+        "@pulumi/keycloak": "^5.2.1",
+        "@pulumi/pulumi": "^3.0.0",
+        "crypt": "^0.0.2"
+    }
+}
