@@ -3,14 +3,18 @@ import * as pulumi from "@pulumi/pulumi";
 
 import { User } from "../data/user";
 
-import { randomUUID } from "crypto";
-
 export class RealmSettingsProvider {
+  private realName: string;
+
+  constructor(realmName: string) {
+    this.realName = realmName;
+  }
+
   createRealm(realmName: string): keycloak.Realm {
     const args: keycloak.RealmArgs = {
-      realm: realmName,
+      realm: this.realName,
     };
-    return new keycloak.Realm(`keycloak_realm_${randomUUID()}`, args);
+    return new keycloak.Realm(`keycloak_realm_${this.realName}`, args);
   }
 
   createGoogleProvider(
@@ -24,7 +28,7 @@ export class RealmSettingsProvider {
       clientSecret: clientSecret,
     };
     return new keycloak.oidc.GoogleIdentityProvider(
-      `keycloak_google_identity_provider_${randomUUID()}`,
+      `keycloak_google_identity_provider_${this.realName}`,
       args
     );
   }
@@ -37,10 +41,13 @@ export class RealmSettingsProvider {
       realmId: realmId,
       name: groupName,
     };
-    return new keycloak.Group(`keycloak_group_${randomUUID()}`, args);
+    return new keycloak.Group(`keycloak_group_${this.realName}_${groupName}`, args);
   }
 
-  createUser(realmId: pulumi.Output<string>, user: User): keycloak.User {
+  createUser(
+    realmId: pulumi.Output<string>,
+    user: User
+  ): keycloak.User {
     const args: keycloak.UserArgs = {
       realmId: realmId,
       username: user.username,
@@ -51,11 +58,12 @@ export class RealmSettingsProvider {
       email: user.email,
       emailVerified: true,
     };
-    return new keycloak.User(`keycloak_user_${randomUUID()}`, args);
+    return new keycloak.User(`keycloak_user_${this.realName}_${user.username}`, args);
   }
 
   createGroupMemberShip(
     realmId: pulumi.Output<string>,
+    groupName: string,
     groupId: pulumi.Output<string>,
     userNames: pulumi.Output<string>[]
   ): keycloak.GroupMemberships {
@@ -65,7 +73,7 @@ export class RealmSettingsProvider {
       members: userNames,
     };
     return new keycloak.GroupMemberships(
-      `keycloak_group_membership_${randomUUID()}`,
+      `keycloak_group_membership_${this.realName}_${groupName}`,
       args
     );
   }
@@ -83,7 +91,7 @@ export class RealmSettingsProvider {
       fullPath: false,
     };
     return new keycloak.openid.GroupMembershipProtocolMapper(
-      `keycloak_group_membership_protocol_mapper_${randomUUID()}`,
+      `keycloak_group_membership_protocol_mapper_${this.realName}_${claimName}`,
       args
     );
   }
@@ -108,7 +116,7 @@ export class RealmSettingsProvider {
       consentRequired: true,
     };
     return new keycloak.openid.Client(
-      `keycloak_openid_client_${randomUUID()}`,
+      `keycloak_openid_client_${this.realName}_${clientId}`,
       args
     );
   }
@@ -125,13 +133,14 @@ export class RealmSettingsProvider {
       consentScreenText: clientScopeName,
     };
     return new keycloak.openid.ClientScope(
-      `keycloak_client_scope_${randomUUID()}`,
+      `keycloak_client_scope_${this.realName}_${clientScopeName}`,
       args
     );
   }
 
   createClientDefaultScopes(
     realmId: pulumi.Output<string>,
+    clientName: string,
     clientId: pulumi.Output<string>,
     defaultScopes: string[]
   ): keycloak.openid.ClientDefaultScopes {
@@ -141,13 +150,14 @@ export class RealmSettingsProvider {
       defaultScopes: defaultScopes,
     };
     return new keycloak.openid.ClientDefaultScopes(
-      `keycloak_client_default_scopes_${randomUUID()}`,
+      `keycloak_client_default_scopes_${this.realName}_${clientName}`,
       args
     );
   }
 
   createClientOptionalScopes(
     realmId: pulumi.Output<string>,
+    clientName: string,
     clientId: pulumi.Output<string>,
     optionalScopes: string[]
   ): keycloak.openid.ClientOptionalScopes {
@@ -157,7 +167,7 @@ export class RealmSettingsProvider {
       optionalScopes: optionalScopes,
     };
     return new keycloak.openid.ClientOptionalScopes(
-      `keycloak_client_optional_scopes_${randomUUID()}`,
+      `keycloak_client_optional_scopes_${this.realName}_${clientName}`,
       args
     );
   }

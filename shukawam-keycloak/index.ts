@@ -5,10 +5,10 @@ import { RealmSettingsProvider } from "./providers/realm-settings-provider";
 
 const config = new pulumi.Config();
 const data = config.requireObject<Data>("data");
-const provider = new RealmSettingsProvider();
 
 // create realms.
 data.realms.forEach((r) => {
+  const provider = new RealmSettingsProvider(r.name);
   const realmId = provider.createRealm(r.name).id;
   // create google provider.
   if (r.googleProvider != undefined) {
@@ -27,7 +27,7 @@ data.realms.forEach((r) => {
         g.users.forEach((u) => {
           usernames.push(provider.createUser(realmId, u).username);
         });
-        provider.createGroupMemberShip(realmId, group.id, usernames);
+        provider.createGroupMemberShip(realmId, g.name, group.id, usernames);
       }
     });
   }
@@ -52,11 +52,17 @@ data.realms.forEach((r) => {
       );
       // create scopes
       if (c.defaultScopes != undefined) {
-        provider.createClientDefaultScopes(realmId, client.id, c.defaultScopes);
+        provider.createClientDefaultScopes(
+          realmId,
+          c.clientName,
+          client.id,
+          c.defaultScopes
+        );
       }
       if (c.optionalScopes != undefined) {
         provider.createClientOptionalScopes(
           realmId,
+          c.clientName,
           client.id,
           c.optionalScopes
         );
