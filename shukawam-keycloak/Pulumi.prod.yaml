@@ -1,13 +1,12 @@
 config:
   keycloak:clientId:
-    secure: AAABAPdQCEwqMDmHowQTw1voTPZ/iw67iHPBEH6zvCVF0e6a8gI=
+    secure: AAABAGr6w4vcbjVdT9UTtd9l5Fh0S6347XWiEwyh+j4Fik6fvIM=
   keycloak:clientSecret:
-    secure: AAABAJdZZRjPmd0TDhO3kSFcABnxG7Gsv8MRXNFGxzIkRnwHiQlomM3aNoLsb4AZ5fZI1bwo5ocEQxr4ZZ8FdQ==
+    secure: AAABAFR/gpK+RugORKn+hO8g9En6tSVvejSn/4+CYMh+JRVZa8XNhIr1ED+8TJ+UkyXiuVpnWzFYCDn8lOzIug==
   keycloak:url: https://keycloak.shukawam.me
   shukawam-keycloak:data:
     realms:
-      - name: shukawam
-        googleProvider:
+      - googleProvider:
           clientId:
             secure: AAABAPHyd9Z08rkETgVE4nx3M3Wo/ffILnxzaAlJoC6qabPIIE64fO3UycnKImGhoaoj8y/jbg2XwQoZlnSNQRwFj+XrtQAgfbgoqP6BHTj3bF3u/aJzxeLQ2B60ZTNiJIsPaaczjeI=
           clientSecret:
@@ -18,6 +17,7 @@ config:
             users:
               - email: guest@example.com
                 username: guest
+        name: shukawam
         oidc:
           additionalScopes:
             - groups
@@ -37,46 +37,18 @@ config:
                 secure: AAABAK1TQM0H1uW38KepxqN43KRfQ+ks9kRafs7JkX5oJsq9IBtaqMcy/4F5jjFBD8LUd/K7g+dhbmo=
               validRedirectUris:
                 - /login/generic_oauth
-      # - name: ochacafe
-      #   # Keycloak - Identity brokering/Social Login
-      #   googleProvider:
-      #     clientId:
-      #       secure: AAABALMuoM9LwzTn/oRx/MO1wL6C8PqQbQG4keWy7/RcAKERt80WtLP+ogHyYjfPw0Dje0x2oIxY8ip6RhxPu+D25Yp3jUOHWgG5dBjwCLX6Rx6t+OTVN27YyqxUWq+uv4S72PFAFhM=
-      #     clientSecret:
-      #       secure: AAABAFb6EEQ7znP1CqLcFTJHLwfmRWy1vRVQFExcxf9gUgG0fqVKlea5xur77WHdGdz+BK05FlGvdFrhG6hys9Ds5w==
-      #   # Keycloak native user and groups
-      #   groups:
-      #     - name: guest
-      #       users:
-      #         - email: guest@example.com
-      #           username: guest
-      #     - name: admin
-      #       users:
-      #         - email: admin@example.com
-      #           username: admin
-      #   oidc:
-      #     additionalScopes:
-      #       - groups
-      #       - cowsay:say
-      #       - cowsay:think
-      #     clients:
-      #       - clientId: curl-rp
-      #         clientName: curl-rp
-      #         clientSecret: 90d6dec4-af3f-417a-87a1-0b7ccc9c2942
-      #         rootUri: http://localhost:3000
-      #         validRedirectUris:
-      #           - /callback
-      #       - clientId: helidon-rp
-      #         clientName: helidon-rp
-      #         clientSecret:
-      #           secure: AAABAHqtMm+dxXn2rksEeCmMY6Lcs37SLu3NGvVbhMyTYQCemyD6dyOJ1r8na7oPgqHhVCcc6CH8B1YmeJrhRHgNMFk=
-      #         optionalScopes:
-      #           - address
-      #           - phone
-      #           - offline_access
-      #           - microprofile-jwt
-      #           - cowsay:say
-      #           - cowsay:think
-      #         rootUri: https://ochacafe.shukawam.me
-      #         validRedirectUris:
-      #           - /oidc/redirect
+            - clientId:
+                secure: AAABADu4KmuFpst9SJe7NwD0RPogIGuom7GyVt3o8gV7vhqFYYs=
+              clientName: argocd
+              clientSecret:
+                secure: AAABADLYkAb/BIyypzuu8hf5ueH2/h43eVGVjkaGkuvLVbeUtaQt1rAgHGgB+NBNXwuLhosq/GeNLdMumv0AnOW55ck=
+              defaultScopes:
+                - acr
+                - email
+                - groups
+                - profile
+                - roles
+              rootUri:
+                secure: AAABAPukO3+1cfEmKgdSHxp+MFSyEuYBYQYzk72KyMWBexLt9fCmlF1e4ZthXNEtEiVdqzcMW6S1MA==
+              validRedirectUris:
+                - /auth/callback
