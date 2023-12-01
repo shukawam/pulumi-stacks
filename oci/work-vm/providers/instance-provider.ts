@@ -48,13 +48,10 @@ export class InstanceProvider {
   listImages(): Promise<GetImagesResult> {
     const args: GetImagesArgs = {
       compartmentId: this.compartmentId,
-      filters: [
-        {
-          name: "display_name",
-          values: ["Canonical-Ubuntu-22.04-2023.09.27-*"],
-          regex: true,
-        },
-      ],
+      operatingSystem: "Canonical Ubuntu",
+      operatingSystemVersion: "22.04",
+      sortBy: "TIMECREATED",
+      sortOrder: "DESC"
     };
     return getImages(args);
   }
