@@ -1,0 +1,13 @@
+config:
+  oci:region: ap-tokyo-1
+  work-vm:data:
+    compartmentId: ocid1.compartment.oc1..aaaaaaaanjtbllhqxcg67dq7em3vto2mvsbc6pbgk4pw6cx37afzk3tngmoa
+    vcn:
+      prefix: shukawam
+      cidrBlock: "192.168.0.0/16"
+      publicSubnet: "192.168.0.0/24"
+      privateSubnet: "192.168.1.0/24"
+    instance:
+      prefix: shukawam
+      ocpus: 1
+      memoryInGbs: 16
